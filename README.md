@@ -1,4 +1,4 @@
-# DRM debug flag and dynamic debugging options enable 
+# DRM(Direct Rendering Manager) debug flag and dynamic debugging options enable 
 
 
 
