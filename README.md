@@ -2,8 +2,8 @@
 
 
 
-### 1. ctrl + alt +T open ternimel 
-### 2. enable debug flag in grub
+## 1. ctrl + alt +T open ternimel 
+## 2. enable debug flag in grub
 Input:
 
 ```
@@ -20,40 +20,51 @@ change to:
 ```
 GRUB_COMLINE_LINUX_DEFAULT="quiet splashd drm.debug=0x10e log_buf_len=4M"  
 ```
-### 3.Save and exit 
-Ctrl +X => Y and click enter to save  
+## 3.Save and exit 
 
+Save and exit: `Ctrl + X`, press `Y`, then `Enter`.
+ 
 ```
 sudo update-grub  
 ```
 
-### 4. Restart OS
-### 5. ctrl + alt +T open ternimel and input follow commends to enables dynamic debugging options (will be reset if system reboot, please see Note)
+## 4. Restart OS
+## 5. ctrl + alt +T open ternimel and input follow commends to enables dynamic debugging options (will be reset if system reboot, please see Note)
 
 ```
 sudo bash -c 'echo -n "file drivers/acpi/* +pt" > /sys/kernel/debug/dynamic_debug/control'  
 sudo bash -c 'echo -n "file drivers/base/power/* +pt" > /sys/kernel/debug/dynamic_debug/control'  
 sudo bash -c 'echo -n "file kernel/power/suspend.c +pt" > /sys/kernel/debug/dynamic_debug/control'  
 ```
-
-### 6. Start issue repro 
-### 7. End issue repro 
-### 8. sudo dmesg > dmesg.txt  ==> copy this file 
-
-
+<br><br><br>
+## 6. Start issue repro 
+## 7. End issue repro 
+## 8. sudo dmesg > dmesg.txt  ==> copy this file 
 
 
-# Note: Create systemd service to automatic enabling the dynamic debugging options 
 
-### a. Create a script：
+<br>
+<br>
+<br>
+<br>
+<br>
 
-Create a file
+
+
+
+
+
+# Note: Automatically Enable Dynamic Debugging via Systemd Service 
+
+## a. Create the script：
+
+Open a new file
 
 ```
 sudo nano /usr/local/bin/dynamic_debug.sh
 ```
 
-input following content
+Input following content
 
 ```
 #!/bin/bash
@@ -61,17 +72,17 @@ echo -n "file drivers/acpi/* +pt" > /sys/kernel/debug/dynamic_debug/control
 echo -n "file drivers/base/power/* +pt" > /sys/kernel/debug/dynamic_debug/control
 echo -n "file kernel/power/suspend.c +pt" > /sys/kernel/debug/dynamic_debug/control
 ```
-Ctrl +X => Y and click enter to save 
+Save and exit: `Ctrl + X`, press `Y`, then `Enter`.
 
-### b. Give the 權限
+## b. Set execution permission
 
 ```
 sudo chmod +x /usr/local/bin/dynamic_debug.sh
 ```
 
-### c. Create a systemd service:
+## c. Create a systemd service:
 
-Create a file
+Open new file
 
 ```
 sudo nano /etc/systemd/system/dynamic_debug.service
@@ -91,7 +102,7 @@ ExecStart=/usr/local/bin/dynamic_debug.sh
 WantedBy=multi-user.target
 ```
 
-### d. Enable and start the service
+## d. Enable and start the service
 
 ```
 sudo systemctl enable dynamic_debug.service
