@@ -4,7 +4,10 @@
 
 ### 1.ctrl + alt +T open ternimel 
 ### 2. enable debug flag in grub
+Input:
+```
 $ sudo nano /etc/default/grub  
+```
 find this line:
 ```
 GRUB_COMLINE_LINUX_DEFAULT="quiet splash"   
